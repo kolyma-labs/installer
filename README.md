@@ -30,7 +30,7 @@ You can download the latest release from the [releases page](https://github.com/
 If you have physical access to your server machine, just use etcher. If you are using a remote server, you can use `dd` to write the image to a usb stick:
 
 ```bash
-dd if=\<image\> of=/dev/sdX bs=4M status=progress oflag=sync
+dd if=kolyma-installer-x86_64-linux.iso of=/dev/sdX bs=4M status=progress oflag=sync
 ```
 
 ## License
