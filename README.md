@@ -8,7 +8,7 @@
 
 <p align="center">
     <img align="center" src="https://img.shields.io/github/languages/top/kolyma-labs/installer?style=flat&logo=nixos&logoColor=ffffff&labelColor=242424&color=242424" alt="Top Used Language">
-    <a href="https://github.com/kolyma-labs/installer/actions/workflows/test.yml"><img align="center" src="https://img.shields.io/github/v/release/kolyma-labs/installer?style=flat&logo=github&logoColor=ffffff&labelColor=242424&color=242424" alt="Release"></a>
+    <a href="https://github.com/kolyma-labs/installer/releases"><img align="center" src="https://img.shields.io/github/v/release/kolyma-labs/installer?style=flat&logo=github&logoColor=ffffff&labelColor=242424&color=242424" alt="Release"></a>
     <a href="https://github.com/kolyma-labs/installer/actions/workflows/test.yml"><img align="center" src="https://img.shields.io/github/actions/workflow/status/kolyma-labs/installer/test.yml?style=flat&logo=github&logoColor=ffffff&labelColor=242424&color=242424" alt="Test CI"></a>
 </p>
 
