@@ -51,11 +51,6 @@ jobs:
         name: installer-x86_64-linux
         path: ./iso/x86_64-linux
 
-    - name: List file tree
-      run: |
-        sudo apt-get install tree
-        tree ./
-
     - name: Upload ISO (x86_64)
       uses:
          softprops/action-gh-release@v2
@@ -64,4 +59,4 @@ jobs:
         prerelease: false
         make_latest: true
         generate_release_notes: true
-        files: ./iso/x86_64-linux/kolyma-installer-x86_64.iso
+        files: ./iso/x86_64-linux/kolyma-installer-x86_64-linux.iso
