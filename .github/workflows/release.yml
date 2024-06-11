@@ -1,0 +1,69 @@
+name: Build and Release ISOs
+
+on:
+  push:
+    tags:
+      - '*.*r*'
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        system: [x86_64-linux] # [x86_64-linux, aarch64-linux] for future support
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Nix
+      uses: DeterminateSystems/nix-installer-action@main
+      with:
+        flakehub: true
+
+    - name: Build ISO
+      run: nix build .#nixosConfigurations.installer.config.system.build.isoImage
+    
+    - name: Rename ISO Artifact
+      run: mv ./result/iso/*.iso ./result/iso/kolyma-installer-${{ matrix.system }}.iso
+
+    - name: Upload ISO Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: installer-${{ matrix.system }}
+        path: ./result/iso/*
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download ISO Artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: installer-x86_64-linux
+        path: ./iso/x86_64-linux
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+
+    - name: Upload ISO (x86_64)
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./iso/x86_64-linux
+        asset_name: kolyma-installer-x86_64.iso
+        asset_content_type: application/octet-stream
