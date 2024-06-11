@@ -5,14 +5,14 @@
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
 
-    # You can access packages and modules from different nixpkgs revs
-    # at the same time. Here's an working example:
+    # Nixpkgs Unstable (for newer packages)
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, ... } @ inputs: {
     # NixOS configuration entrypoint
     nixosConfigurations = {
+      # The installer OS
       installer = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
