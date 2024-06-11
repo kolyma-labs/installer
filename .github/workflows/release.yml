@@ -1,4 +1,4 @@
-name: Build and Release ISOs
+name: Release CI
 
 on:
   push:

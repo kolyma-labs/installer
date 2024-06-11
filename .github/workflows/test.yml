@@ -1,0 +1,17 @@
+name: Test CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v4
+
+    - name: Install Nix
+      uses: DeterminateSystems/nix-installer-action@main
+
+    - name: Build the flake
+      run: nix build .#nixosConfigurations.installer.config.system.build.isoImage
