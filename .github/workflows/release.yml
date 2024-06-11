@@ -21,8 +21,6 @@ jobs:
 
     - name: Setup Nix
       uses: DeterminateSystems/nix-installer-action@main
-      with:
-        flakehub: true
 
     - name: Build ISO
       run: nix build .#nixosConfigurations.installer.config.system.build.isoImage
