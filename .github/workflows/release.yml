@@ -35,16 +35,19 @@ jobs:
         run: nix build .#nixosConfigurations.installer-${{ matrix.system.alias }}.config.system.build.isoImage
 
       - name: Rename ISO Artifact
-        run: sudo cp ./result/iso/*.iso ./result/iso/kolyma-installer-${{ matrix.system.alias }}.iso
+        run: |
+          rm -rf ./images
+          mkdir -p images
+          cp ./result/iso/*.iso ./images/kolyma-installer-${{ matrix.system.alias }}.iso
 
       - name: Give Artifact Permissions
-        run: sudo chmod 777 ./result/iso/kolyma-installer-${{ matrix.system }}.iso
+        run: chmod 777 ./images/kolyma-installer-${{ matrix.system.alias }}.iso
 
       - name: Upload ISO Artifact
         uses: actions/upload-artifact@v4
         with:
           name: installer-${{ matrix.system.alias }}
-          path: ./result/iso/*
+          path: ./images/*
 
   release:
     needs: build
