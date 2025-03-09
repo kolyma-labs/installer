@@ -5,9 +5,6 @@
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
 
-    # Nixpkgs Unstable (for newer packages)
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
     # Flake utils for eachSystem
     flake-utils.url = "github:numtide/flake-utils";
 
@@ -19,9 +16,7 @@
   };
 
   outputs = {
-    self,
     nixpkgs,
-    nixpkgs-unstable,
     flake-utils,
     orzklv,
     ...
