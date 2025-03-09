@@ -27,7 +27,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Nix
+      - name: Install Nix
+        if: ${{ matrix.system.os != 'self-hosted' }}
         uses: DeterminateSystems/nix-installer-action@main
 
       - name: Build ISO
