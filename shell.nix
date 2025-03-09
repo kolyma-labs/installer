@@ -8,14 +8,16 @@
   in
     import nixpkgs {overlays = [];},
   ...
-}: {
-  default = pkgs.mkShell {
-    NIX_CONFIG = "extra-experimental-features = nix-command flakes";
-    nativeBuildInputs = with pkgs; [
-      git
-      just
-      nixd
-      alejandra
-    ];
-  };
+}:
+pkgs.stdenv.mkDerivation {
+  name = "installer";
+
+  nativeBuildInputs = with pkgs; [
+    git
+    just
+    nixd
+    alejandra
+  ];
+
+  NIX_CONFIG = "extra-experimental-features = nix-command flakes";
 }

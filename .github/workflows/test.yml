@@ -4,14 +4,23 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        system:
+          - os: ubuntu-latest
+            alias: x86_64-linux
+
+          - os: self-hosted
+            alias: aarch64-linux
+
+    runs-on: ${{ matrix.system.os }}
 
     steps:
-    - name: Check out the repository
-      uses: actions/checkout@v4
+      - name: Check out the repository
+        uses: actions/checkout@v4
 
-    - name: Install Nix
-      uses: DeterminateSystems/nix-installer-action@main
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
 
-    - name: Build the flake
-      run: nix build .#nixosConfigurations.installer.config.system.build.isoImage
+      - name: Build the flake
+        run: nix build .#nixosConfigurations.installer-${{ matrix.system.alias }}.config.system.build.isoImage

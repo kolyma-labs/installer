@@ -3,7 +3,7 @@ name: Release CI
 on:
   push:
     tags:
-      - '*.*r*'
+      - "*.*r*"
   release:
     types: [published]
 
@@ -12,51 +12,59 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        system: [x86_64-linux] # [x86_64-linux, aarch64-linux] for future support
+        system:
+          - os: ubuntu-latest
+            alias: x86_64-linux
+
+          - os: self-hosted
+            alias: aarch64-linux
+
+    runs-on: ${{ matrix.system.os }}
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup Nix
-      uses: DeterminateSystems/nix-installer-action@main
+      - name: Setup Nix
+        uses: DeterminateSystems/nix-installer-action@main
 
-    - name: Build ISO
-      run: nix build .#nixosConfigurations.installer.config.system.build.isoImage
-    
-    - name: Rename ISO Artifact
-      run: sudo cp ./result/iso/*.iso ./result/iso/kolyma-installer-${{ matrix.system }}.iso
+      - name: Build ISO
+        run: nix build .#nixosConfigurations.installer-${{ matrix.system.alias }}.config.system.build.isoImage
 
-    - name: Give Artifact Permissions
-      run: sudo chmod 777 ./result/iso/kolyma-installer-${{ matrix.system }}.iso
+      - name: Rename ISO Artifact
+        run: sudo cp ./result/iso/*.iso ./result/iso/kolyma-installer-${{ matrix.system.alias }}.iso
 
-    - name: Upload ISO Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: installer-${{ matrix.system }}
-        path: ./result/iso/*
+      - name: Give Artifact Permissions
+        run: sudo chmod 777 ./result/iso/kolyma-installer-${{ matrix.system }}.iso
+
+      - name: Upload ISO Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: installer-${{ matrix.system.alias }}
+          path: ./result/iso/*
 
   release:
     needs: build
     runs-on: ubuntu-latest
 
-    steps:
-    - name: Download ISO Artifacts
-      uses: actions/download-artifact@v3
-      with:
-        name: installer-x86_64-linux
-        path: ./iso/x86_64-linux
+    strategy:
+      matrix:
+        system: [x86_64-linux, aarch64-linux]
 
-    - name: Upload ISO (x86_64)
-      uses:
-         softprops/action-gh-release@v2
-      with:
-        draft: false
-        prerelease: false
-        make_latest: true
-        generate_release_notes: true
-        files: ./iso/x86_64-linux/kolyma-installer-x86_64-linux.iso
+    steps:
+      - name: Download ISO Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: installer-${{ matrix.system }}
+          path: ./iso/${{ matrix.system }}
+
+      - name: Upload ISO (${{ matrix.system }})
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: false
+          prerelease: false
+          make_latest: true
+          generate_release_notes: true
+          files: ./iso/${{ matrix.system }}/kolyma-installer-${{ matrix.system }}.iso

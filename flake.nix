@@ -47,14 +47,20 @@
       inherit (orzklv) formatter;
 
       # NixOS configuration entrypoint
-      nixosConfigurations = {
-        # The installer OS
-        installer = nixpkgs.lib.nixosSystem {
-          specialArgs = {inherit inputs;};
-          modules = [
-            ./installer.nix
-          ];
-        };
-      };
+      nixosConfigurations =
+        flake-utils.lib.eachSystemPassThrough
+        ["x86_64-linux" "aarch64-linux"]
+        (system: {
+          # The installer OS
+          "installer-${system}" = nixpkgs.lib.nixosSystem {
+            specialArgs = {
+              inherit inputs;
+              arch = system;
+            };
+            modules = [
+              ./installer.nix
+            ];
+          };
+        });
     };
 }
