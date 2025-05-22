@@ -12,7 +12,7 @@
     <a href="https://github.com/kolyma-labs/installer/actions/workflows/test.yml"><img align="center" src="https://img.shields.io/github/actions/workflow/status/kolyma-labs/installer/test.yml?style=flat&logo=github&logoColor=ffffff&labelColor=242424&color=242424" alt="Test CI"></a>
 </p>
 
-# About
+## About
 
 When bootstrapping NixOS on a new server machine, using nixos-anywhere itself becomes a bit of a hassle. This repository aims to provide a simple way to create NixOS images with Kolyma's specifications whereas you may write images to attached usb sticks which will later be booted first upon failed main system boot.
 
