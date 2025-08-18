@@ -9,11 +9,15 @@
 
   services.openssh = {
     enable = true;
+    ports = [
+      22
+      2222
+      22222
+    ];
     extraConfig = ''
       PrintLastLog no
     '';
     settings.PasswordAuthentication = false;
-
   };
 
   nixpkgs = {
