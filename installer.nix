@@ -44,5 +44,26 @@
     ];
   };
 
+  # Networking (one time only)
+  # Change whenever machines changes
+  networking = {
+    interfaces = {
+      ens18.ipv4.addresses = [
+        {
+          address = "45.150.26.118";
+          prefixLength = 28;
+        }
+      ];
+    };
+    defaultGateway = {
+      address = "45.150.26.113";
+      interface = "ens18";
+    };
+
+    nameservers = [
+      "8.8.8.8"
+    ];
+  };
+
   nixpkgs.hostPlatform = arch;
 }
