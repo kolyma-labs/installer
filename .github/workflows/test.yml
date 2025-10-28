@@ -7,11 +7,8 @@ jobs:
     strategy:
       matrix:
         system:
-          - os: ubuntu-latest
-            alias: x86_64-linux
-
           - os: self-hosted
-            alias: aarch64-linux
+            alias: x86_64-linux
 
     runs-on: ${{ matrix.system.os }}
 

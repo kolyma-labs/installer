@@ -1,4 +1,5 @@
 {
+  lib,
   modulesPath,
   arch ? "x86_64-linux",
   ...
@@ -37,7 +38,7 @@
   nix = {
     settings = {
       # Enable flakes and new 'nix' command
-      experimental-features = "nix-command flakes";
+      experimental-features = "nix-command flakes pipe-operators";
     };
   };
 
@@ -50,24 +51,25 @@
 
   # Networking (one time only)
   # Change whenever machines changes
-  networking = {
-    interfaces = {
-      ens18.ipv4.addresses = [
-        {
-          address = "45.150.26.18";
-          prefixLength = 28;
-        }
-      ];
-    };
-    defaultGateway = {
-      address = "45.150.26.17";
-      interface = "ens18";
-    };
+  networking.useDHCP = lib.mkForce true;
+  # networking = {
+  #   interfaces = {
+  #     ens18.ipv4.addresses = [
+  #       {
+  #         address = "45.150.26.18";
+  #         prefixLength = 28;
+  #       }
+  #     ];
+  #   };
+  #   defaultGateway = {
+  #     address = "45.150.26.17";
+  #     interface = "ens18";
+  #   };
 
-    nameservers = [
-      "8.8.8.8"
-    ];
-  };
+  #   nameservers = [
+  #     "8.8.8.8"
+  #   ];
+  # };
 
   nixpkgs.hostPlatform = arch;
 }
