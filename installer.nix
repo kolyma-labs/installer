@@ -18,7 +18,7 @@
     extraConfig = ''
       PrintLastLog no
     '';
-    settings.PasswordAuthentication = false;
+    settings.PasswordAuthentication = true;
   };
 
   nixpkgs = {
