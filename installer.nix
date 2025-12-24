@@ -52,25 +52,26 @@
 
   # Networking (one time only)
   # Change whenever machines changes
-  networking.useDHCP = lib.mkForce true;
-  # networking = {
-  #   interfaces = {
-  #     ens18.ipv4.addresses = [
-  #       {
-  #         address = "45.150.26.18";
-  #         prefixLength = 28;
-  #       }
-  #     ];
-  #   };
-  #   defaultGateway = {
-  #     address = "45.150.26.17";
-  #     interface = "ens18";
-  #   };
+  # networking.useDHCP = lib.mkForce true;
+  networking = {
+    interfaces = {
+      ens18.ipv4.addresses = [
+        {
+          address = "10.0.0.7";
+          prefixLength = 24;
+        }
+      ];
+    };
+    defaultGateway = {
+      address = "10.0.0.211";
+      interface = "ens18";
+    };
 
-  #   nameservers = [
-  #     "8.8.8.8"
-  #   ];
-  # };
+    nameservers = [
+      "1.1.1.1"
+      "1.0.0.1"
+    ];
+  };
 
   nixpkgs.hostPlatform = arch;
 }
