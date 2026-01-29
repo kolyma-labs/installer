@@ -57,13 +57,13 @@
     interfaces = {
       ens18.ipv4.addresses = [
         {
-          address = "10.0.0.107";
-          prefixLength = 24;
+          address = "45.150.26.120";
+          prefixLength = 28;
         }
       ];
     };
     defaultGateway = {
-      address = "10.0.0.211";
+      address = "45.150.26.117";
       interface = "ens18";
     };
 
