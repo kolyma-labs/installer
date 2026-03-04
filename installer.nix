@@ -57,13 +57,13 @@
     interfaces = {
       eno1.ipv4.addresses = [
         {
-          address = "45.150.26.120";
-          prefixLength = 28;
+          address = "192.168.20.32";
+          prefixLength = 24;
         }
       ];
     };
     defaultGateway = {
-      address = "45.150.26.117";
+      address = "192.168.20.70";
       interface = "eno1";
     };
 
