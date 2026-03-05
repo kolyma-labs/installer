@@ -55,7 +55,7 @@
   # networking.useDHCP = lib.mkForce true;
   networking = {
     interfaces = {
-      eno1.ipv4.addresses = [
+      ens33.ipv4.addresses = [
         {
           address = "192.168.20.32";
           prefixLength = 24;
@@ -64,7 +64,7 @@
     };
     defaultGateway = {
       address = "192.168.20.70";
-      interface = "eno1";
+      interface = "ens33";
     };
 
     nameservers = [
